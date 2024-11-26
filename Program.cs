@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+
 namespace Polymorphism
 {
     abstract class Shape
@@ -14,13 +15,23 @@ namespace Polymorphism
         public double Length
         {
             get { return _length; }
-            set { _length = value; }
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException("Length cannot be negative.");
+                _length = value;
+            }
         }
 
         public double Width
         {
             get { return _width; }
-            set { _width = value; }
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException("Width cannot be negative.");
+                _width = value;
+            }
         }
 
         public override double CalculateArea()
@@ -36,7 +47,12 @@ namespace Polymorphism
         public double Radius
         {
             get { return _radius; }
-            set { _radius = value; }
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException("Radius cannot be negative.");
+                _radius = value;
+            }
         }
 
         public override double CalculateArea()
@@ -53,13 +69,23 @@ namespace Polymorphism
         public double Base
         {
             get { return _base; }
-            set { _base = value; }
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException("Base cannot be negative.");
+                _base = value;
+            }
         }
 
         public double Height
         {
             get { return _height; }
-            set { _height = value; }
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException("Height cannot be negative.");
+                _height = value;
+            }
         }
 
         public override double CalculateArea()
@@ -72,16 +98,24 @@ namespace Polymorphism
     {
         static void Main()
         {
-            Shape[] shapes = new Shape[]
+            try
             {
-                new Rectangle { Length = 10, Width = 5 },
-                new Circle { Radius = 7 },
-                new Triangle { Base = 5, Height = 8 }
-            };
+                Shape[] shapes = new Shape[]
+                {
+                    new Rectangle { Length = 10, Width = 5 },
+                    new Circle { Radius = 7 },
+                    new Triangle { Base = 5, Height = 8 }
+                };
 
-            foreach (var shape in shapes)
+                foreach (var shape in shapes)
+                {
+                    Console.WriteLine($"{shape.GetType().Name} Area: {shape.CalculateArea()}");
+                }
+
+            }
+            catch (ArgumentException e)
             {
-                Console.WriteLine($"{shape.GetType().Name} Area: {shape.CalculateArea()}");
+                Console.WriteLine($"Error {e.Message}");
             }
         }
     }
